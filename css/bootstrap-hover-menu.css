@@ -14,8 +14,16 @@
     visibility: visible;
 }
 
-.dropdown:hover .dropdown-menu {
-    display: block;
+.dropdown .dropdown-menu .dropdown-submenu ul.dropdown-menu{
+    visibility: hidden;
+}
+
+.dropdown-menu li:hover .dropdown-submenu {
+    visibility: visible;
+}
+
+.dropdown .dropdown-menu .dropdown-submenu ul.dropdown-menu{
+    visibility: hidden;
 }
 
 .nav-tabs .dropdown-menu, .nav-pills .dropdown-menu, .navbar .dropdown-menu {
