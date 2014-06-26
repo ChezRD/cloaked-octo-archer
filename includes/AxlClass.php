@@ -15,13 +15,15 @@ class AxlClass {
 
     public $_client;
     /**
-    * @var type $_client The SoapClient Object created with the CUCM AXL WSDL  
+    * @var type $_client The SoapClient Object created with the CUCM AXL WSDL
+    * Default WSDL version is 8.5.  Specify another version (folder) like 7.0/
     */
-    public function __construct($clusterIp,$port)
+    public function __construct($clusterIp,$port,$ver='')
     {
-    $this->_client = new SoapClient("../includes/7.0/AXLAPI.wsdl",
+    $this->_client = new SoapClient("../includes/" . $ver . "AXLAPI.wsdl",
         array(
             'trace'=>1,
+            'cache_wsdl' => 'WSDL_CACHE_NONE',
             'exceptions'=>true,
             'location'=>"https://$clusterIp:$port/axl/",
             'login'=>'sloanma',
@@ -250,6 +252,17 @@ protected $E;
             return $this->_client->doDeviceReset(array(
                 'deviceName' => $device,
                 'isHardReset' => 't'
+            ));
+        } catch (SoapFault $E) { return $this->SoapError($E); }
+    }
+    public function updateLinePartition($line,$from,$to)
+    {
+        try {
+
+            return $this->_client->updateLine(array(
+                'pattern' => $line,
+                'routePartitionName' => $from,
+                'newRoutePartitionName' => $to
             ));
         } catch (SoapFault $E) { return $this->SoapError($E); }
     }

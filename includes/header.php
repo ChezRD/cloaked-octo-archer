@@ -35,7 +35,7 @@ and open the template in the editor.
                         <ul class="dropdown-menu">
                             <li><a href="checkWebSingle.php"><span class="glyphicon"></span>Single Phone</a></li>
                             <li><a href="checkWebBulk.php"><span class="glyphicon"></span>Load Bulk Phones</a></li>
-                            <li><a href="checkWebReport.php"><span class="glyphicon"></span>Report Phones</a></li>
+                            <li><a href="checkWebReport.php"><span class="glyphicon"></span>Report: Phones</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">
@@ -43,7 +43,7 @@ and open the template in the editor.
                         <ul class="dropdown-menu">
                             <li><a href="ctlSingle.php"><span class="glyphicon"></span>Single Phone</a></li>
                             <li><a href="ctlBulk.php"><span class="glyphicon"></span>Load Bulk Phones</a></li>
-                            <li><a href="ctlReport.php"><span class="glyphicon"></span>Report Phones</a></li>
+                            <li><a href="ctlReport.php"><span class="glyphicon"></span>Report: Phones</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">
@@ -51,7 +51,7 @@ and open the template in the editor.
                         <ul class="dropdown-menu">
                             <li><a href="resetSingle.php"><span class="glyphicon"></span>Single Phone</a></li>
                             <li><a href="resetBulk.php"><span class="glyphicon"></span>Load Bulk Phones</a></li>
-                            <li><a href="resetReport.php"><span class="glyphicon"></span>Report Phones</a></li>
+                            <li><a href="resetReport.php"><span class="glyphicon"></span>Report: Phones</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">
@@ -59,7 +59,15 @@ and open the template in the editor.
                         <ul class="dropdown-menu">
                             <li><a href="dialerSingle.php"><span class="glyphicon"></span>Single Phone</a></li>
                             <li><a href="dialerBulk.php"><span class="glyphicon"></span>Load Bulk Phones</a></li>
-                            <li><a href="dialerReport.php"><span class="glyphicon"></span>Report Phones</a></li>
+                            <li><a href="dialerReport.php"><span class="glyphicon"></span>Report: Phones</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="javascript:void(0)" class="dropdown-toggle <?php echo preg_match('/switcher/i', basename($_SERVER['SCRIPT_FILENAME'])) ? 'active': '';?>"><span class="glyphicon right-margin-glyph"></span>Partition Switcher</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="switcherSingle.php"><span class="glyphicon"></span>Switcher Single</a></li>
+                            <li><a href="switcherBulk.php"><span class="glyphicon"></span>Switcher Bulk</a></li>
+                            <li><a href="switcherReport.php"><span class="glyphicon"></span>Report: Switcher</a></li>
                         </ul>
                     </li>
                     <?php endif ?>
@@ -68,7 +76,7 @@ and open the template in the editor.
                     <li><a href="logout.php"><span class="glyphicon glyphicon-asterisk text-danger"></span> Log Out</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="adminOptions.php?username=<?php echo $_SESSION['username']; ?>" ><span class="text-info"></span> Hello <b class="text-info"><?php echo $_SESSION['username']; ?></b></a></li>
+                    <li><a href="javascript:void(0)" ><span class="text-info"></span> Hello <b class="text-info"><?php echo $_SESSION['username']; ?></b></a></li>
                 </ul>
             </div>
         </div>

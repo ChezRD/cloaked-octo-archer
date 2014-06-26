@@ -13,6 +13,7 @@
 <script src="/custom/js/reset.js"></script>
 <script src="/custom/js/checkWeb.js"></script>
 <script src="/custom/js/dialer.js"></script>
+<script src="/custom/js/switcher.js"></script>
 <?php echo Xcrud::load_js(); ?>
 </body>
 </html>

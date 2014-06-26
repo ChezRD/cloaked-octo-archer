@@ -374,6 +374,17 @@ function updateDescription($device,$description,$axl,$klogger)
 
     return $response;
 }
+
+function updateLinePartition($line,$from,$to,$axl,$klogger)
+{
+    $response = $axl->updateLinePartition($line,$from,$to);
+
+    $klogger->logInfo("Request",$axl->_client->__getLastRequest());
+    $klogger->logInfo("Response",$axl->_client->__getLastResponse());
+    //$klogger->logInfo("Request Headers",$axl->_client->__getLastRequestHeaders());
+
+    return $response;
+}
 function clearMySqlTable($table)
 {
     $connection = database::MySqlConnection();
