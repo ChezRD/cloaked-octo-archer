@@ -8,7 +8,7 @@ $(function(){
             url: "ajax/ctl.php",
             type: "POST",
             dataType : 'json',
-            async: false,
+            //async: true,
             data: {
                 deviceName: element.find(".device").text()
             },

@@ -10,7 +10,7 @@ require_once "../includes/mySqlDb.php";
 require_once "../includes/KLogger.php";
 
 
-$_REQUEST['deviceName'] = "SEP0023EBC87F46"; // My NIPT 7975
+//$_REQUEST['deviceName'] = "SEP0023EBC87F46"; // My NIPT 7975
 
 $martyAxl = 'sloanma';  //My CUCM AXL Account
 
@@ -99,9 +99,12 @@ if (isset($_REQUEST['deviceName']))
         sleep(5);
         $res = IpPhoneApi::keyPress($ip,"Key:Speaker",$klogger);
         $klogger->logInfo("End Call Results", $res);
+
+        $mySql->query("INSERT INTO dial_results(device,ip,code,status,last_updated) VALUES ('$phone','$ip','200', '$pattern[pattern]', NOW()) ON DUPLICATE KEY UPDATE device = '$phone', ip = '$ip', code = '200', status = '$pattern[pattern]', last_updated = NOW() ");
+
     }
 
-    $mySql->query("INSERT INTO dial_results(device,ip,code,status,last_updated) VALUES ('$phone','$ip','200', 'Dial Process Sent',NOW()) ON DUPLICATE KEY UPDATE device = '$phone', ip = '$ip', code = '200', status = 'Dial Process Sent', last_updated = NOW() ");
+    //$mySql->query("INSERT INTO dial_results(device,ip,code,status,last_updated) VALUES ('$phone','$ip','200', 'Dial Process Sent', NOW()) ON DUPLICATE KEY UPDATE device = '$phone', ip = '$ip', code = '200', status = 'Dial Process Sent', last_updated = NOW() ");
     echo json_encode(array('success' => true,'message' => 'Dial Process Sent', 'code' => '200 OK'));
 
 }

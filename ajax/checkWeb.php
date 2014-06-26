@@ -71,7 +71,7 @@ if (isset($_REQUEST['deviceName']))
 
     if (!preg_match('/Cisco Systems/',$res))
     {
-        $mySql->query("INSERT INTO web_results(device,ip,code,status,last_updated) VALUES ('$phone','$ip','500', 'No Response from Phones Web Server',NOW()) ON DUPLICATE KEY UPDATE device = '$phone', ip = '$ip', code = '500', status = 'No Response from Phones Web Server', last_updated = NOW() ");
+        $mySql->query("INSERT INTO web_results(device,ip,code,status,last_updated) VALUES ('$phone','$ip','500', 'No Response from Phones Web Server or Unsupported Model',NOW()) ON DUPLICATE KEY UPDATE device = '$phone', ip = '$ip', code = '500', status = 'No Response from Phones Web Server or Unsupported Model', last_updated = NOW() ");
         echo json_encode(array('success' => false,'message' => 'There was an error accessing the web interface', 'code' => '500 Server Error'));
         exit;
     }

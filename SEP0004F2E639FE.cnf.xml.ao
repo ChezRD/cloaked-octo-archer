@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<device  xsi:type="axl:XIPPhone" ctiid="635" uuid="{45323dff-979b-4c36-9328-d8ec969fa246}">
+<fullConfig>true</fullConfig>
+<deviceProtocol>SCCP</deviceProtocol>
+<sshUserId></sshUserId>
+<sshPassword></sshPassword>
+<ipAddressMode>0</ipAddressMode>
+<ipPreferenceModeControl>0</ipPreferenceModeControl>
+<allowAutoConfig>true</allowAutoConfig>
+<tzdata>
+<tzolsonversion>2010i</tzolsonversion>
+<tzupdater>tzupdater.jar</tzupdater>
+</tzdata>
+<devicePool  uuid="{1ce216d4-8e20-8cf5-cf08-fd6faceece79}">
+<revertPriority>0</revertPriority>
+<name>CO-Phones_dp</name>
+<dateTimeSetting  uuid="{9ec4850a-7748-11d3-bdf0-00108302ead1}">
+<name>EST</name>
+<dateTemplate>M/D/YA</dateTemplate>
+<timeZone>Eastern Standard/Daylight Time</timeZone>
+<olsonTimeZone>America/New_York</olsonTimeZone>
+</dateTimeSetting>
+<callManagerGroup>
+<name>CO-S3-S4-S2_cmrg</name>
+<tftpDefault>false</tftpDefault>
+<members>
+<member  priority="0">
+<callManager>
+<name>10.132.210.13</name>
+<description>10.132.210.13 (COSC-UCMSUB3)</description>
+<ports>
+<ethernetPhonePort>2000</ethernetPhonePort>
+<sipPort>5060</sipPort>
+<securedSipPort>5061</securedSipPort>
+<mgcpPorts>
+<listen>2427</listen>
+<keepAlive>2428</keepAlive>
+</mgcpPorts>
+</ports>
+<processNodeName>10.132.210.13</processNodeName>
+</callManager>
+</member>
+<member  priority="1">
+<callManager>
+<name>10.132.210.14</name>
+<description>10.132.210.14 (COSC-UCMSUB4)</description>
+<ports>
+<ethernetPhonePort>2000</ethernetPhonePort>
+<sipPort>5060</sipPort>
+<securedSipPort>5061</securedSipPort>
+<mgcpPorts>
+<listen>2427</listen>
+<keepAlive>2428</keepAlive>
+</mgcpPorts>
+</ports>
+<processNodeName>10.132.210.14</processNodeName>
+</callManager>
+</member>
+<member  priority="2">
+<callManager>
+<name>10.132.11.12</name>
+<description>10.132.11.12 (AO-UCMSUB2)</description>
+<ports>
+<ethernetPhonePort>2000</ethernetPhonePort>
+<sipPort>5060</sipPort>
+<securedSipPort>5061</securedSipPort>
+<mgcpPorts>
+<listen>2427</listen>
+<keepAlive>2428</keepAlive>
+</mgcpPorts>
+</ports>
+<processNodeName>10.132.11.12</processNodeName>
+</callManager>
+</member>
+</members>
+</callManagerGroup>
+<srstInfo  uuid="{cd241e11-4a58-4d3d-9661-f06c912a18a3}">
+<name>Disable</name>
+<srstOption>Disable</srstOption>
+<userModifiable>false</userModifiable>
+<ipAddr1></ipAddr1>
+<port1>2000</port1>
+<ipAddr2></ipAddr2>
+<port2>2000</port2>
+<ipAddr3></ipAddr3>
+<port3>2000</port3>
+<sipIpAddr1></sipIpAddr1>
+<sipPort1>5060</sipPort1>
+<sipIpAddr2></sipIpAddr2>
+<sipPort2>5060</sipPort2>
+<sipIpAddr3></sipIpAddr3>
+<sipPort3>5060</sipPort3>
+<isSecure>false</isSecure>
+</srstInfo>
+<mlppDomainId>-1</mlppDomainId>
+<mlppIndicationStatus>Default</mlppIndicationStatus>
+<preemption>Default</preemption>
+<connectionMonitorDuration>120</connectionMonitorDuration>
+</devicePool>
+<commonProfile>
+<phonePassword></phonePassword>
+<backgroundImageAccess>true</backgroundImageAccess>
+<callLogBlfEnabled>3</callLogBlfEnabled>
+</commonProfile>
+<loadInformation>apps37sccp.1-4-4-0</loadInformation>
+<vendorConfig>
+<garp>0</garp><voiceVlanAccess>0</voiceVlanAccess><sshAccess>1</sshAccess></vendorConfig>
+<commonConfig>
+</commonConfig>
+<enterpriseConfig>
+</enterpriseConfig>
+<versionStamp>1399560309-8beab4c2-a5b5-4f97-bb22-f0ebbc0fde3b</versionStamp>
+<userLocale>
+<name>English_United_States</name>
+<uid>1</uid>
+<langCode>en_US</langCode>
+<version>7.1.0.1(3)</version>
+<winCharSet>iso-8859-1</winCharSet>
+</userLocale>
+<networkLocale>United_States</networkLocale>
+<networkLocaleInfo>
+<name>United_States</name>
+<uid>64</uid>
+<version>7.1.0.1(3)</version>
+</networkLocaleInfo>
+<idleTimeout>0</idleTimeout>
+<authenticationURL>http://ao-iptauth.usc.ao.dcn:8081/InformaCast/phone/auth</authenticationURL>
+<directoryURL>http://ao-ipps.usc.ao.dcn:8080/ccmcip/xmldirectory.jsp</directoryURL>
+<idleURL></idleURL>
+<informationURL>http://ao-ipps.usc.ao.dcn:8080/ccmcip/GetTelecasterHelpText.jsp</informationURL>
+<messagesURL></messagesURL>
+<proxyServerURL></proxyServerURL>
+<servicesURL>http://ao-ipps.usc.ao.dcn:8080/ccmcip/getservicesmenu.jsp</servicesURL>
+<dscpForSCCPPhoneConfig>96</dscpForSCCPPhoneConfig>
+<dscpForSCCPPhoneServices>0</dscpForSCCPPhoneServices>
+<dscpForCm2Dvce>96</dscpForCm2Dvce>
+<transportLayerProtocol>1</transportLayerProtocol>
+<dndCallAlert>2</dndCallAlert>
+<phonePersonalization>0</phonePersonalization>
+<rollover>0</rollover>
+<singleButtonBarge>0</singleButtonBarge>
+<joinAcrossLines>0</joinAcrossLines>
+<autoCallPickupEnable>false</autoCallPickupEnable>
+<blfAudibleAlertSettingOfIdleStation>0</blfAudibleAlertSettingOfIdleStation>
+<blfAudibleAlertSettingOfBusyStation>0</blfAudibleAlertSettingOfBusyStation>
+<capfAuthMode>0</capfAuthMode>
+<capfList>
+<capf>
+<phonePort>3804</phonePort>
+<processNodeName>10.132.10.10</processNodeName>
+</capf>
+</capfList>
+<certHash></certHash>
+<encrConfig>false</encrConfig>
+<advertiseG722Codec>1</advertiseG722Codec>
+<mobility>
+<handoffdn>4035</handoffdn>
+<dtmfdn>4036</dtmfdn>
+<ivrdn>4034</ivrdn>
+<dtmfHoldCode>*81</dtmfHoldCode>
+<dtmfExclusiveHoldCode>*82</dtmfExclusiveHoldCode>
+<dtmfResumeCode>*83</dtmfResumeCode>
+<dtmfTxfCode>*84</dtmfTxfCode>
+<dtmfCnfCode>*85</dtmfCnfCode>
+</mobility>
+<userId></userId>
+<phoneServices>
+<provisioning>0</provisioning>
+<phoneService  type="1" category="0">
+<name>Missed Calls</name>
+<url>Application:Cisco/MissedCalls</url>
+<vendor></vendor>
+<version></version>
+</phoneService>
+<phoneService  type="2" category="0">
+<name>Voicemail</name>
+<url>Application:Cisco/Voicemail</url>
+<vendor></vendor>
+<version></version>
+</phoneService>
+<phoneService  type="1" category="0">
+<name>Received Calls</name>
+<url>Application:Cisco/ReceivedCalls</url>
+<vendor></vendor>
+<version></version>
+</phoneService>
+<phoneService  type="1" category="0">
+<name>Placed Calls</name>
+<url>Application:Cisco/PlacedCalls</url>
+<vendor></vendor>
+<version></version>
+</phoneService>
+<phoneService  type="1" category="0">
+<name>Corporate Directory</name>
+<url>Application:Cisco/CorporateDirectory</url>
+<vendor></vendor>
+<version></version>
+</phoneService>
+</phoneServices>
+</device>
