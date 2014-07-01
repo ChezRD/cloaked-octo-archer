@@ -32,7 +32,7 @@ $(function(){
             error: function( data ) {
                 console.log(data);
                 element.find(".status").html( "<strong style='color: red'>Error</strong>" );
-                element.find(".message").html( "<strong style='color: red'>Ajax Error</strong>" );
+                element.find(".message").html( "<strong style='color: red'>" + data.responseText + "</strong>" );
             }
         });
     });

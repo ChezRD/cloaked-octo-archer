@@ -22,12 +22,12 @@ if (isset($_REQUEST['lineNumber']) && isset($_REQUEST['cluster']))
     switch($cluster)
     {
         case 'AO':
-            $axl = new AxlClass('10.134.173.100','8443'); //10.132.10.10
+            $axl = new AxlClass('10.132.10.10','8443','7.0/'); //10.132.10.10
             $from = 'EW-Internal_pt';
-            $to = 'Migrated';
+            $to = 'MIGRATE_pt';
             break;
         case 'NIPT':
-            $axl = new AxlClass('10.134.173.100','8443',''); //10.179.168.10
+            $axl = new AxlClass('10.79.168.10','8443',''); //10.179.168.10
             $from = 'Test_PT';
             $to = 'All-DN_pt';
             break;
