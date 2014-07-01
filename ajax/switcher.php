@@ -27,7 +27,7 @@ if (isset($_REQUEST['lineNumber']) && isset($_REQUEST['cluster']))
             $to = 'MIGRATE_pt';
             break;
         case 'NIPT':
-            $axl = new AxlClass('10.79.168.10','8443',''); //10.179.168.10
+            $axl = new AxlClass('10.179.168.10','8443',''); //10.179.168.10
             $from = 'Test_PT';
             $to = 'All-DN_pt';
             break;
