@@ -7,22 +7,22 @@
 $client = new SoapClient('includes/Cucm85RIS.wsdl',
 			 array('trace'=>true,
 			       'exceptions'=>true,
-			       'location'=>'https://192.168.1.120:8443/realtimeservice/services/RisPort',
-			       'login'=>'admin',
-			       'password'=>'ci5co123',
+			       'location'=>'https://10.132.10.10:8443/realtimeservice/services/RisPort',
+			       'login'=>'sloanma',
+			       'password'=>'$l0whanD58',
 			       ));
 
 $SelectItems = array(array('Item'=>'*')); //select devices with any name, wildcard '*'
 // to select multiple items, add additional array elements as below
 //$SelectItems = array(array('Item'=>'SEPD0574C6B4EC2'),array('Item'=>'SEPD0574CF73FC0'),array('Item'=>'SEP503DE57D5583'),array('Item'=>'SEP002699EDFD02'));
 
-$CmSelectionCriteria = array('MaxReturnedDevices'=>'1000',
+$CmSelectionCriteria = array('MaxReturnedDevices'=>'200', //note hardcoded limit of 200 returns, max of 1000 allowed for CUCM 8.6+
 			     'Class'=>'Phone',
 			     'Model'=>'255',
 			     'Status'=>'Any',
 			     'NodeName'=>'',
 			     'SelectBy'=>'Name',
-			     'SelectItems'=>$SelectItems); //note hardcoded limit of 50 returns, max of 1000 allowed
+			     'SelectItems'=>$SelectItems);
 
 try {
   $response = $client->SelectCmDevice('',$CmSelectionCriteria); //execute the request;

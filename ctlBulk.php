@@ -2,7 +2,11 @@
 <?php $INC_DIR = $_SERVER["DOCUMENT_ROOT"] . "/includes";?>
 <?php require_once "$INC_DIR/header.php"; ?>
 <?php require_once "$INC_DIR/functions.php"; ?>
-
+<?php
+ini_set('xdebug.var_display_max_depth', -1);
+ini_set('xdebug.var_display_max_children', -1);
+ini_set('xdebug.var_display_max_data', -1);
+?>
 <!-- Custom page content -->
 <div class="row top-margin-row" >
     <div class="row-fluid">
@@ -38,31 +42,37 @@
                 <?php if (!$_FILES['file']['name'] == ""): ?>
                     <table id='upi' class="table table-striped table-hover">
                         <thead>
+                        <th>#</th>
                         <th>Device Name</th>
+                        <th>IP Address</th>
                         <th>Status</th>
                         <th>Message</th>
                         <th>Code</th>
                         </thead>
-                        <?php if($csv = processCsv($_FILES)): ?>
+                        <?php if($csv = processCsvCtl($_FILES)): ?>
+                            <?php $i = 1; ?>
                             <?php foreach ($csv as $row): ?>
                                 <?php if ($row == ''): ?>
                                     <? continue; ?>
                                 <?php endif ?>
-                                <tr class="requestRowCtl">
-                                    <td class="device"><?php echo "$row[0]"; ?></td>
+                                <tr class="requestRowCtlChunk">
+                                    <td><?php echo $i; ?></td>
+                                    <td class="device"><?php echo "$row[DeviceName]"; ?></td>
+                                    <td class="ip"><?php echo "$row[IpAddress]"; ?></td>
                                     <td class="status"></td>
                                     <td class="message"></td>
                                     <td class="code"></td>
                                 </tr>
+                                <?php $i++ ?>
                             <?php endforeach ?>
                         <?php else: ?>
                         <h2 class="text-center text-primary">Error Loading File!</h2>
-                        <a href="ctl.php">Go Back</a>
+                        <a href="ctlBulk.php">Go Back</a>
                         <?php endif ?>
                     </table>
                 <?php else: ?>
                     <h2 class="text-center text-primary">No File Selected</h2>
-                    <a href="ctl.php">Go Back</a>
+                    <a href="ctlBulk.php">Go Back</a>
                 <?php endif ?>
             <?php endif ?>
         </div>

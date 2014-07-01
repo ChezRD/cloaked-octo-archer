@@ -2,6 +2,8 @@
 
 //ini_set('display_errors', 'On');
 require_once "mySqlDb.php";
+require_once $_SERVER["DOCUMENT_ROOT"] . "/includes/AxlRisApi.php";
+require_once "KLogger.php";
 
 function addAdmin($userName,$firstName,$lastName,$role){
 
@@ -94,6 +96,56 @@ function processCsv($file)
         return  openFile($file['name']);
     }
 
+}
+
+function processCsvCtl($file)
+{
+    $csv = processCsv($file);
+
+    foreach ($csv as $row)
+    {
+        if ($row == '') continue;
+
+        $dev_array[]['Item'] = $row[0];
+
+    }
+
+    $risClient = new AxlRisApi('10.132.10.10');
+    $klogger = new KLogger($_SERVER["DOCUMENT_ROOT"] .  "/Logs/CTL/Bulk",KLogger::DEBUG);
+
+    foreach (array_chunk($dev_array,10,true) as $chunk)
+    {
+        $ris_query  = getDeviceIpBulk($dev_array,$risClient,$klogger);
+
+        foreach ($chunk as $key => $val)
+        {
+            foreach ($ris_query as $cm_node)
+            {
+                if (!isset($cm_node->CmDevices[0])) continue;
+
+                $ip_results[] = searchForIp($cm_node->CmDevices,$val['Item']);
+
+            }
+        }
+
+    }
+    return $ip_results;
+}
+
+function searchForIp($array,$value)
+{
+    $return = [];
+
+    foreach ($array as $device)
+    {
+        if ($device->Name == $value && $device->Status == "Registered")
+        {
+            $return['DeviceName'] = $value;
+            $return['IpAddress'] = $device->IpAddress;
+        }
+    }
+
+    return $return;
 }
 
 function openFile($file){
@@ -223,6 +275,33 @@ function updateUserDevAssoc($userId,$device,$axl,$klogger)
 
     return $response;
 }
+function updateUserDevAssocKeep($userId,$device,$userObj,$axl,$klogger)
+{
+    if (!($userObj->return->user->associatedDevices->device))
+    {
+        $devices[] = $device;
+
+    } elseif (is_array($userObj->return->user->associatedDevices->device)) {
+
+        $devices = $userObj->return->user->associatedDevices->device;
+        $devices[count($devices)] = $device;
+
+    } else {
+        $devices[] = $userObj->return->user->associatedDevices->device;
+        $devices[count($devices)] = $device;
+    }
+
+    $devices = array_values($devices);
+
+    $klogger->logInfo("Request",$devices);
+
+    $response = $axl->updateUserDevAssoc($userId,$devices);
+
+    $klogger->logInfo("Request",$axl->_client->__getLastRequest());
+    $klogger->logInfo("Response",$axl->_client->__getLastResponse());
+
+    return $response;
+}
 function updatePrimaryExtension($userId,$primaryExtension,$axl,$klogger)
 {
 
@@ -311,6 +390,17 @@ function getDeviceIp($device,$ris,$klogger)
 
     return $response;
 }
+
+function getDeviceIpBulk($devices,$ris,$klogger)
+{
+    $response = $ris->getDeviceIpBulk($devices);
+
+    $klogger->logInfo("Request",$ris->_client->__getLastRequest());
+    $klogger->logInfo("Response",$ris->_client->__getLastResponse());
+
+    return $response;
+}
+
 function checkMAC($primaryDevice)
 {
 
@@ -390,6 +480,3 @@ function clearMySqlTable($table)
     $connection = database::MySqlConnection();
     $connection->query("TRUNCATE TABLE $table");
 }
-
-
-

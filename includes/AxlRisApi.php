@@ -13,7 +13,7 @@ class AxlRisApi {
 
     public function __construct($ip)
     {
-        $this->_client = new SoapClient('../includes/Cucm85RIS.wsdl',
+        $this->_client = new SoapClient($_SERVER["DOCUMENT_ROOT"] . '/includes/Cucm85RIS.wsdl',
             array('trace'=>true,
                 'exceptions'=>true,
                 'location'=>'https://' . $ip . ':8443/realtimeservice/services/RisPort',
@@ -67,13 +67,15 @@ class AxlRisApi {
     public function getDeviceIpBulk($phones)
     {
 
-        $CmSelectionCriteria = array('MaxReturnedDevices'=>'1',
+        $CmSelectionCriteria = array('MaxReturnedDevices'=>'200',
             'Class'=>'Phone',
             'Model'=>'255',
-            'Status'=>'Registered',
+            'Status'=>'Any', //Registered
             'NodeName'=>'',
             'SelectBy'=>'Name',
-            'SelectItems'=> $phones);
+            'SelectItems'=>
+                $phones
+            );
 
         try {
 
@@ -84,15 +86,9 @@ class AxlRisApi {
 
         $SelectCmDeviceResult = $response["SelectCmDeviceResult"];
 
-        if ($SelectCmDeviceResult->TotalDevicesFound = 1) {
+        if ($SelectCmDeviceResult->TotalDevicesFound >= 1) {
 
-            foreach ($SelectCmDeviceResult->CmNodes as $i)
-            {
-                if ($i->CmDevices[0]->Status == "Registered")
-                {
-                    return $i->CmDevices[0]->IpAddress;
-                }
-            }
+            return $SelectCmDeviceResult->CmNodes;
 
         } else { return false; }
     }
