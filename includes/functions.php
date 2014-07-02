@@ -117,35 +117,42 @@ function processCsvCtl($file)
     {
         $ris_query  = getDeviceIpBulk($dev_array,$risClient,$klogger);
 
+        $i = 0;
+
         foreach ($chunk as $key => $val)
         {
+            $ip_results[$i]['DeviceName'] = $val['Item'];
+
             foreach ($ris_query as $cm_node)
             {
                 if (!isset($cm_node->CmDevices[0])) continue;
 
-                $ip_results[] = searchForIp($cm_node->CmDevices,$val['Item']);
+                $ip_results[$i]['IpAddress'] = searchForIp($cm_node->CmDevices,$ip_results[$i]['DeviceName']);
 
             }
-        }
 
+            if (!$ip_results[$i]['IpAddress'])
+            {
+                $ip_results[$i]['IpAddress'] = "Not Registered";
+            }
+
+            $i++;
+        }
     }
+
     return $ip_results;
 }
 
 function searchForIp($array,$value)
 {
-    $return = [];
-
     foreach ($array as $device)
     {
         if ($device->Name == $value && $device->Status == "Registered")
         {
-            $return['DeviceName'] = $value;
-            $return['IpAddress'] = $device->IpAddress;
+            return $device->IpAddress;
         }
     }
-
-    return $return;
+    return false;
 }
 
 function openFile($file){
