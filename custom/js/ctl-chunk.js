@@ -2,14 +2,15 @@
  ajax function for deleting CTL file
  */
 $(function(){
-    $(".requestRowCtl").each( function() {
+    $(".requestRowCtlChunk").each( function() {
         var element = $(this);
         $.ajax({
-            url: "ajax/ctl.php",
+            url: "ajax/ctl-chunk.php",
             type: "POST",
             dataType : 'json',
             data: {
-                deviceName: element.find(".device").text()
+                deviceName: element.find(".device").text(),
+                ipAddress: element.find(".ip").text()
             },
             beforeSend: function( data ) {
                 element.find(".status").html( "<strong style='color: grey'>Sending</strong>" );
