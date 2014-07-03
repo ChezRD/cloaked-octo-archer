@@ -3,6 +3,7 @@
 //ini_set('display_errors', 'On');
 require_once "mySqlDb.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/includes/AxlRisApi.php";
+require_once $_SERVER["DOCUMENT_ROOT"] . "/includes/AxlClass.php";
 require_once "KLogger.php";
 
 function addAdmin($userName,$firstName,$lastName,$role){
@@ -100,6 +101,9 @@ function processCsv($file)
 
 function processCsvCtl($file)
 {
+    $martyAxl = 'sloanma';  //My CUCM AXL Account
+    $just_devices = [];
+
     $csv = processCsv($file);
 
     foreach ($csv as $row)
@@ -110,6 +114,7 @@ function processCsvCtl($file)
 
     }
 
+    $axl = new AxlClass('10.132.10.10','8443','7.0/');
     $risClient = new AxlRisApi('10.132.10.10');
     $klogger = new KLogger($_SERVER["DOCUMENT_ROOT"] .  "/Logs/CTL/Bulk",KLogger::DEBUG);
 
@@ -133,12 +138,18 @@ function processCsvCtl($file)
 
             if (!$ip_results[$i]['IpAddress'])
             {
-                $ip_results[$i]['IpAddress'] = "Not Registered";
+                $ip_results[$i]['IpAddress'] = "Unregistered";
+            } else {
+                array_push($just_devices,$ip_results[$i]['DeviceName']);
             }
 
             $i++;
         }
     }
+
+    $userObj = getEndUser($martyAxl,$axl,$klogger);
+
+    $res = updateUserDevAssocKeep($martyAxl,$just_devices,$userObj,$axl,$klogger);
 
     return $ip_results;
 }
@@ -282,20 +293,19 @@ function updateUserDevAssoc($userId,$device,$axl,$klogger)
 
     return $response;
 }
-function updateUserDevAssocKeep($userId,$device,$userObj,$axl,$klogger)
+function updateUserDevAssocKeep($userId,$device_list,$userObj,$axl,$klogger)
 {
-    if (!($userObj->return->user->associatedDevices->device))
+    if (!isset($userObj->return->user->associatedDevices->device))
     {
-        $devices[] = $device;
+        $devices = $device_list;
 
     } elseif (is_array($userObj->return->user->associatedDevices->device)) {
 
-        $devices = $userObj->return->user->associatedDevices->device;
-        $devices[count($devices)] = $device;
+        $devices = array_merge($userObj->return->user->associatedDevices->device,$device_list);
 
     } else {
-        $devices[] = $userObj->return->user->associatedDevices->device;
-        $devices[count($devices)] = $device;
+        array_push($device_list,$userObj->return->user->associatedDevices->device);
+        $devices = $device_list;
     }
 
     $devices = array_values($devices);
@@ -486,4 +496,45 @@ function clearMySqlTable($table)
 {
     $connection = database::MySqlConnection();
     $connection->query("TRUNCATE TABLE $table");
+}
+function setCtlKeys($model)
+{
+    switch ($model){
+
+        case "Cisco 7975":
+            return  [
+
+                'Init:Settings',
+                'Key:Settings',
+                'Key:KeyPad4',
+                'Key:KeyPad5',
+                'Key:KeyPad1',
+                'Key:Soft5',
+                'Key:KeyPadStar',
+                'Key:KeyPadStar',
+                'Key:KeyPadPound',
+                'Key:Soft5',
+                'Init:Services'
+            ];
+            break;
+
+        case "Cisco 8961": //Fall through
+        case "Cisco 9951": //Fall through
+        case "Cisco 7937": //Fall through
+        case "Cisco 9971":
+            return [
+
+                'Key:NavBack',
+                'Key:NavBack',
+                'Key:NavBack',
+                'Key:NavBack',
+                'Key:NavBack',
+                'Key:Applications',
+                'Key:KeyPad4',
+                'Key:KeyPad4',
+                'Key:KeyPad4',
+                'Key:Soft3',
+            ];
+            break;
+    }
 }

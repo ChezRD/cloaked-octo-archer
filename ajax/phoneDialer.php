@@ -24,7 +24,7 @@ if (isset($_REQUEST['deviceName']))
     /*
      * Instantiate Objects
      */
-    $axl = new AxlClass('10.132.10.10','8443');
+    $axl = new AxlClass('10.132.10.10','8443','7.0/');
     $risClient = new AxlRisApi('10.132.10.10');
     $klogger = new KLogger("../Logs/Dialer/$phone",KLogger::DEBUG);
     $mySql = database::MySqlConnection();

@@ -11,7 +11,7 @@ ini_set('xdebug.var_display_max_data', -1);
 <div class="row top-margin-row" >
     <div class="row-fluid">
         <div class="col-md-6 col-md-offset-3 margin-bottom-form">
-            <form id="<?php echo !isset($_FILES['file']['name']) == "" ? 'form-hide' : ''; ?>" class="bs-example form-horizontal" method="post" enctype='multipart/form-data' action="<?php echo "ctlBulk.php" ?>" >
+            <form class="<?php echo isset($_FILES['file']['name']) ? 'hide' : ''; ?> bs-example form-horizontal" method="post" enctype='multipart/form-data' action="<?php echo "ctlBulk.php" ?>" >
                 <div class="panel-group">
                     <div class="panel panel-primary">
                         <div class="panel-heading">

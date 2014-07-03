@@ -20,7 +20,7 @@ class AxlClass {
     */
     public function __construct($clusterIp,$port,$ver='')
     {
-    $this->_client = new SoapClient("../includes/" . $ver . "AXLAPI.wsdl",
+    $this->_client = new SoapClient($_SERVER["DOCUMENT_ROOT"] . "/includes/" . $ver . "AXLAPI.wsdl",
         array(
             'trace'=>1,
             'cache_wsdl' => 'WSDL_CACHE_NONE',

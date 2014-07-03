@@ -22,6 +22,12 @@ if (isset($_REQUEST['deviceName']) && isset($_REQUEST['ipAddress']))
     $phone = clean($_REQUEST['deviceName']);
     $ip = clean($_REQUEST['ipAddress']);
 
+    if ($ip == "Unregistered")
+    {
+        echo json_encode(array('success' => false,'message' => "This device is not registered", 'code' => '404 Not Found'));
+        exit;
+    }
+
     /*
      * Instantiate Objects
      */
@@ -30,16 +36,39 @@ if (isset($_REQUEST['deviceName']) && isset($_REQUEST['ipAddress']))
     $mySql = database::MySqlConnection();
 
     /*
-     * Get User device association
+     * Get Device Model
      */
-    $userObj = getEndUser($martyAxl,$axl,$klogger);
+    $response = getPhone($phone,$axl,$klogger);
+
+    if (is_array($response))
+    {
+        $klogger->logInfo('There was an error getting the device model',$response);
+        echo json_encode(array('success' => false,'message' => 'There was an error getting the device model', 'code' => '500 Server Error'));
+        $mySql->query("INSERT INTO ctl_results(device,ip,code,status,last_updated) VALUES ('$phone','','500', 'There was an error getting the device model',NOW()) ON DUPLICATE KEY UPDATE device = '$phone', ip = '', code = '500', status = 'There was an error getting the device model', last_updated = NOW() ");
+        exit;
+
+    } else {
+        $model = $response->model;
+        $klogger->logInfo("Obtained device model $model for $phone");
+    }
 
     /*
-     * Update device association
+     * Get array of keys presses to delete the CTL, based on the device model
      */
+    $uri = setCtlKeys($model);
 
-    $res = updateUserDevAssocKeep($martyAxl,$phone,$userObj,$axl,$klogger);
+    /*
+     * Press keys
+     */
+    foreach ($uri as $k)
+    {
+        $res = IpPhoneApi::keyPress($ip,$k,$klogger);
+        $klogger->logInfo("Result", $res);
 
-    echo json_encode(array('success' => true,'message' => "Got data for $_REQUEST[deviceName] & $_REQUEST[ipAddress]", 'code' => '200 OK'));
+        $k == "Key:KeyPadPound" ? sleep(2) : usleep(500000);
+    }
+
+    $mySql->query("INSERT INTO ctl_results(device,ip,code,status,last_updated) VALUES ('$phone','$ip','200', 'CTL Process Sent',NOW()) ON DUPLICATE KEY UPDATE device = '$phone', ip = '$ip', code = '200', status = 'CTL Process Sent', last_updated = NOW() ");
+    echo json_encode(array('success' => true,'message' => 'CTL Process Sent', 'code' => '200 OK'));
 
 }
