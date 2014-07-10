@@ -67,7 +67,7 @@ and open the template in the editor.
                         <ul class="dropdown-menu">
                             <li><a href="switcherSingle.php"><span class="glyphicon"></span>Switcher Single</a></li>
                             <li><a href="switcherBulk.php"><span class="glyphicon"></span>Switcher Bulk</a></li>
-                            <li><a href="switcherReport.php"><span class="glyphicon"></span>Report: Switcher</a></li>
+                            <!-- <li><a href="switcherReport.php"><span class="glyphicon"></span>Report: Switcher</a></li> -->
                         </ul>
                     </li>
                     <?php endif ?>

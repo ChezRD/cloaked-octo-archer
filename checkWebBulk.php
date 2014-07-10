@@ -7,7 +7,7 @@
 <div class="row top-margin-row" >
     <div class="row-fluid">
         <div class="col-md-6 col-md-offset-3 margin-bottom-form">
-            <form id="<?php echo !isset($_FILES['file']['name']) == "" ? 'form-hide' : ''; ?>" class="bs-example form-horizontal" method="post" enctype='multipart/form-data' action="<?php echo "checkWebBulk.php" ?>" >
+            <form class="<?php echo isset($_FILES['file']['name']) ? 'hide' : ''; ?> bs-example form-horizontal" method="post" enctype='multipart/form-data' action="<?php echo "checkWebBulk.php" ?>" >
                 <div class="panel-group">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
@@ -57,12 +57,12 @@
                             <?php endforeach ?>
                         <?php else: ?>
                         <h2 class="text-center text-primary">Error Loading File!</h2>
-                        <a href="ctl.php">Go Back</a>
+                        <a href="checkWebBulk.php">Go Back</a>
                         <?php endif ?>
                     </table>
                 <?php else: ?>
                     <h2 class="text-center text-primary">No File Selected</h2>
-                    <a href="ctl.php">Go Back</a>
+                    <a href="checkWebBulk.php">Go Back</a>
                 <?php endif ?>
             <?php endif ?>
         </div>

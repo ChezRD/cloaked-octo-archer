@@ -101,11 +101,12 @@ function processCsv($file)
 
 function processCsvCtl($file)
 {
-    $martyAxl = 'sloanma';  //My CUCM AXL Account
-    $just_devices = [];
+    $martyAxl = 'sloanma';  //My CUCM AXL Account to associate device to
+    $just_devices = []; // Create array to hold just device names
 
-    $csv = processCsv($file);
+    $csv = processCsv($file); // Open and process the CSV file
 
+    //Create $dev_array which will be used to query SXML with 'Item' => SEP....
     foreach ($csv as $row)
     {
         if ($row == '') continue;
@@ -114,15 +115,19 @@ function processCsvCtl($file)
 
     }
 
+    // Create utility objects
     $axl = new AxlClass('10.132.10.10','8443','7.0/');
     $risClient = new AxlRisApi('10.132.10.10');
     $klogger = new KLogger($_SERVER["DOCUMENT_ROOT"] .  "/Logs/CTL/Bulk",KLogger::DEBUG);
 
-    foreach (array_chunk($dev_array,10,true) as $chunk)
-    {
-        $ris_query  = getDeviceIpBulk($dev_array,$risClient,$klogger);
+    // Device Array Index
+    $i = 0;
 
-        $i = 0;
+    // Iterate $dev_array in chunks of 200, which is the maximum query size for CUCM SXML 7.x
+    foreach (array_chunk($dev_array,200,true) as $chunk)
+    {
+        // Send query to SXML to obtain registration status for
+        $ris_query  = getDeviceIpBulk($chunk,$risClient,$klogger);
 
         foreach ($chunk as $key => $val)
         {
@@ -133,6 +138,10 @@ function processCsvCtl($file)
                 if (!isset($cm_node->CmDevices[0])) continue;
 
                 $ip_results[$i]['IpAddress'] = searchForIp($cm_node->CmDevices,$ip_results[$i]['DeviceName']);
+
+                $klogger->logInfo('IP Results',$ip_results[$i]['IpAddress']);
+
+                if (filter_var($ip_results[$i]['IpAddress'], FILTER_VALIDATE_IP)) break;
 
             }
 

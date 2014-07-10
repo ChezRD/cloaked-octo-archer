@@ -9,7 +9,6 @@ require_once "../includes/AxlClass.php";
 require_once "../includes/mySqlDb.php";
 require_once "../includes/KLogger.php";
 
-
 //$_REQUEST['deviceName'] = "SEP0026CB3B9218"; // Put MAC here to test via CLI
 
 $martyAxl = 'sloanma';  //My CUCM AXL Account
@@ -19,6 +18,7 @@ if (isset($_REQUEST['deviceName']) && isset($_REQUEST['ipAddress']))
     /*
      * Sanitize data
      */
+
     $phone = clean($_REQUEST['deviceName']);
     $ip = clean($_REQUEST['ipAddress']);
 

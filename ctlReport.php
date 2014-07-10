@@ -6,7 +6,6 @@
     <!-- Clear MySQL data -->
 <?php if (isset($_POST['table'])): ?>
     <?php clearMySqlTable($_POST['table']); ?>
-    <?php //var_dump($_POST['table']); ?>
 <?php endif ?>
 
     <!-- Custom page content -->
