@@ -5,7 +5,7 @@ vagrantfile-local:
         box_url: puphpet/ubuntu1204-x64
         hostname: null
         memory: '512'
-        chosen_provider: vmware_fusion
+        chosen_provider: virtualbox
         network:
             private_network: 192.168.57.103
             forwarded_port:
@@ -84,7 +84,7 @@ apache:
             servername: iit-tools.com
             serveraliases:
                 - www.iit-tools.com
-            docroot: /var/www/iit-tools
+            docroot: /var/www/
             port: '80'
             setenv:
                 - 'APP_ENV dev'

@@ -7,8 +7,8 @@
 $client = new SoapClient('includes/Cucm85RIS.wsdl',
 			 array('trace'=>true,
 			       'exceptions'=>true,
-			       'location'=>'https://10.132.10.10:8443/realtimeservice/services/RisPort',
-			       'login'=>'sloanma',
+			       'location'=>'https://10.179.168.10:8443/realtimeservice/services/RisPort',
+			       'login'=>'martin sloan',
 			       'password'=>'$l0whanD58',
 			       ));
 
